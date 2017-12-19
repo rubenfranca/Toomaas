@@ -3,3 +3,4 @@ para correr este projeto compre um computador onde o docker funciona e siga um t
 
 instalar no container:
   sqlachemy: pip install sqlalchemy
+  (opcional?)sqlite: sudo apt-get sqlite3
