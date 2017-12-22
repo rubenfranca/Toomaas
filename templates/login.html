@@ -32,3 +32,57 @@
  
 {% endif %}
 {% endblock %}
+
+
+<form action="http://localhost:4001/reservas" method="POST">
+	<div class="login">
+		<div class="login-screen">
+			<div class="app-title">
+				<h1>Inserir reserva</h1>
+			</div>
+ 
+			<div class="login-form">
+				<div class="control-group">
+				<input type="text" class="login-field" value="" placeholder="id sala" name="sala_id">
+				<label class="login-field-icon fui-user" for="login-name"></label>
+				</div>
+ 
+				<div class="control-group">
+				<input type="text" class="login-field" value="" placeholder="id cliente" name="cliente_id">
+				<label class="login-field-icon fui-lock" for="login-pass"></label>
+				</div>
+
+				<div class="control-group">
+				<input type="text" class="login-field" value="" placeholder="dia e hora" name="dia_hora">
+				<label class="login-field-icon fui-lock" for="login-pass"></label>
+				</div>
+
+ 
+                <input type="submit" value="submeter" class="btn btn-primary btn-large btn-block" >
+			    <br>
+			</div>
+		</div>
+	</div>
+</form>
+
+
+<form action="http://localhost:4001/reservas/update" method="POST">
+	<div class="login">
+		<div class="login-screen">
+			<div class="app-title">
+				<h1>pagar reserva</h1>
+			</div>
+ 
+			<div class="login-form">
+				<div class="control-group">
+				<input type="number" class="login-field" value="" placeholder="id reserva" name="id">
+				<label class="login-field-icon fui-user" for="login-name"></label>
+				</div>
+
+ 
+                <input type="submit" value="submeter" class="btn btn-primary btn-large btn-block" >
+			    <br>
+			</div>
+		</div>
+	</div>
+</form>
