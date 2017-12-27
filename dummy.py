@@ -6,7 +6,7 @@ from datetime import datetime
 from tabledef import *
 from sqlalchemy import Column, Date, Integer, String, Float, Time, Boolean
 import sqlite3
-
+import atualizar_tabela
 engine = create_engine('sqlite:///tutorial.db', echo=True)
  
 # create a Session
@@ -25,6 +25,9 @@ session.add(user)
 t = datetime.now()
 reserva = Reserva(t.strftime('21/%m/%Y'),1,1)
 session.add(reserva)
+
+sala = Sala("estudo1",20,30)
+session.add(sala)
  
 # commit the record the database
 session.commit()

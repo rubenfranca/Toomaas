@@ -8,7 +8,7 @@ def home():
     if not session.get('logged_in'):
         return render_template('login.html')
     else:
-        return "Hello Boss!  <a href='/logout'>Logout</a>"
+        return "Hello "+str(session['user_id'])+" <a href='/logout'>Logout</a>"+render_template('login.html')
  
 @app.route('/login', methods=['POST'])
 def do_admin_login():
@@ -19,8 +19,7 @@ def do_admin_login():
     proxy = xmlrpclib.ServerProxy("http://localhost:8000/")
     
     session['logged_in'] = proxy.autenticar(POST_USERNAME, POST_PASSWORD)
-    
-        
+    session['user_id'] = proxy.get_user_id(POST_USERNAME) 
     #Session = sessionmaker(bind=engine)
     #s = Session()
     #query = s.query(User).filter(User.username.in_([POST_USERNAME]), User.password.in_([POST_PASSWORD]) )

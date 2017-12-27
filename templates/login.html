@@ -1,7 +1,7 @@
 <link rel="stylesheet" href="/static/style.css" type="text/css">
 {% block body %}
 {% if session['logged_in'] %}
-<p>You're logged in already!</p>
+	<p>You're logged in already!{{ session['user_id'] }}</p>
 {% else %}
  
  
@@ -57,7 +57,7 @@
 				<label class="login-field-icon fui-lock" for="login-pass"></label>
 				</div>
 
- 
+ 		<input type="hidden" name="user_id" value={{ session['user_id'] }}>	
                 <input type="submit" value="submeter" class="btn btn-primary btn-large btn-block" >
 			    <br>
 			</div>
@@ -81,6 +81,36 @@
 
  
                 <input type="submit" value="submeter" class="btn btn-primary btn-large btn-block" >
+			    <br>
+			</div>
+		</div>
+	</div>
+</form>
+
+<form action="http://localhost:4002/salas" method="POST">
+	<div class="login">
+		<div class="login-screen">
+			<div class="app-title">
+				<h1>criar sala</h1>
+			</div>
+ 
+			<div class="login-form">
+				<div class="control-group">
+				<input type="text" class="login-field" value="" placeholder="nome sala" name="nome_sala">
+				<label class="login-field-icon fui-user" for="login-name"></label>
+				</div>
+ 
+				<div class="control-group">
+				<input type="text" class="login-field" value="" placeholder="preco" name="preco_sala">
+				<label class="login-field-icon fui-lock" for="login-pass"></label>
+				</div>
+
+				<div class="control-group">
+				<input type="text" class="login-field" value="" placeholder="capacidade" name="capacidade_sala">
+				<label class="login-field-icon fui-lock" for="login-pass"></label>
+				</div>
+	
+                <input type="submit" value="criar sala" class="btn btn-primary btn-large btn-block" >
 			    <br>
 			</div>
 		</div>
