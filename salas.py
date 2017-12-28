@@ -7,7 +7,7 @@ def lista_salas():
     engine = create_engine(NOME_BASE_DADOS, echo=True)
     query = engine.execute("select * from salas") 
     #Query the result and get cursor.Dumping that data to a JSON is looked by extension
-    result = {'dados': [dict(zip(tuple (query.keys()) ,i)) for i in query.cursor]}
+    result = {'data': [dict(zip(tuple (query.keys()) ,i)) for i in query.cursor]}
     return json.dumps(result)
 
 @app.route('/salas/<sala_id>/reservas', methods=['GET'])

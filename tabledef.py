@@ -47,7 +47,7 @@ class Reserva(Base):
     __tablename__ = "reservas"
     
     id = Column(Integer, primary_key=True)
-    dia_hora = Column(String)
+    dia_hora = Column(String(20))
     data_pagamento = Column(String, nullable = true)
     pagamento_feito = Column(Integer)
     sala_id = Column(Integer, ForeignKey('salas.id'), nullable=False)

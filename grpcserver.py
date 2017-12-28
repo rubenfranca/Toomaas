@@ -20,6 +20,15 @@ def autenticar(user,pw):
         return True
     else:
         return False
+
+def get_user_id(user):
+    query = s.query(User).filter(User.username.in_([user]))
+    result = query.first()
+    if result:
+        return result.id
+    else:
+        return 0
+    
     
 def get_reservas():
     b = s.query(Reserva.id, Reserva.dia_hora, Reserva.data_pagamento)
@@ -40,7 +49,12 @@ def get_reserva(id):
 def criar_reserva(sala_id,cliente_id,dia_hora):
     reserva = Reserva(dia_hora, sala_id, cliente_id)
     s.add(reserva)
-    if s.commit():
+    failed=False
+    try:
+        s.commit()
+    except Exception as e:
+        failed=True
+    if not failed:
         return True
     else:
         return False
@@ -48,9 +62,31 @@ def criar_reserva(sala_id,cliente_id,dia_hora):
 def pagamento_reserva(id_reserva):
     data_agora = datetime.now()
     data_agora_str = data_agora.strftime('%d/%m/%Y')
+    #s.query().filter(Reserva.id == id_reserva).update({"pagamento_feito": 1})
     #s.query(Reserva).filter_by(id=id_reserva).update({"pagamento_feito": 1, "data_pagamento": data_agora_str})
-    updt = update(reservas).where(reservas.c.id==id_reserva).values(pagamento_feito=1)
-    if updt:
+    #updt = update(reservas).where(reservas.c.id==id_reserva).values(pagamento_feito=1)
+    conn = sqlite3.connect("tutorial.db")
+    c = conn.cursor()
+    c.execute("UPDATE reservas SET pagamento_feito = 1 WHERE id =%s" % id_reserva)
+    failed=False
+    try:
+        conn.commit()
+    except Exception as e:
+        failed=True
+    if not failed:
+        return True
+    else:
+        return False
+
+def criar_sala(nome_sala,preco_sala,capacidade_sala):
+    sala = Sala(nome_sala, preco_sala, capacidade_sala)
+    s.add(sala)
+    failed=False
+    try:
+        s.commit()
+    except Exception as e:
+        failed=True
+    if not failed:
         return True
     else:
         return False
@@ -62,4 +98,6 @@ server.register_function(get_reservas, "get_reservas")
 server.register_function(get_reserva, "get_reserva")
 server.register_function(criar_reserva, "criar_reserva")
 server.register_function(pagamento_reserva, "pagamento_reserva")
+server.register_function(get_user_id, "get_user_id")
+server.register_function(criar_sala, "criar_sala")
 server.serve_forever()

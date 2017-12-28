@@ -22,11 +22,17 @@ session.add(user)
 user = User("jumpiness","python", "emailjump", "293")
 session.add(user)
 
+user = User("123","123", "email123", "123123")
+session.add(user)
+
 t = datetime.now()
 reserva = Reserva(t.strftime('21/%m/%Y'),1,1)
 session.add(reserva)
 
 sala = Sala("estudo1",20,30)
+session.add(sala)
+
+sala = Sala("salite",43,50)
 session.add(sala)
  
 # commit the record the database

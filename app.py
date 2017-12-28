@@ -8,7 +8,7 @@ def home():
     if not session.get('logged_in'):
         return render_template('login.html')
     else:
-        return "Hello "+str(session['user_id'])+" <a href='/logout'>Logout</a>"+render_template('login.html')
+        return render_template('home.html')
  
 @app.route('/login', methods=['POST'])
 def do_admin_login():
@@ -20,14 +20,6 @@ def do_admin_login():
     
     session['logged_in'] = proxy.autenticar(POST_USERNAME, POST_PASSWORD)
     session['user_id'] = proxy.get_user_id(POST_USERNAME) 
-    #Session = sessionmaker(bind=engine)
-    #s = Session()
-    #query = s.query(User).filter(User.username.in_([POST_USERNAME]), User.password.in_([POST_PASSWORD]) )
-    #result = query.first()
-    #if result:
-     #   session['logged_in'] = True
-    #else:
-    #    flash('wrong password!')
     return home()
  
 @app.route("/logout")

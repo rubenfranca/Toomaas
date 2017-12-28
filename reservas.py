@@ -9,16 +9,16 @@ def lista_reservas():
     Session = sessionmaker(bind=engine)
     s = Session()
     b = s.query(User)
-    query = engine.execute("select * from users") 
+    query = engine.execute("select * from reservas") 
         #Query the result and get cursor.Dumping that data to a JSON is looked by extension
-    result = {'data': [dict(zip(tuple (query.keys()) ,i)) for i in query.cursor]}
-        
+    result = {'data':[dict(zip(tuple (query.keys()) ,i)) for i in query.cursor]}
+    #return result    
+    #return 1
     return json.dumps(result)#[ row.username for row in b ])
 
 @app.route('/reservas', methods=['POST'])
 def criar_reserva():
     POST_SALA_ID = int(request.form['sala_id'])
-    POST_CLIENTE_ID = int(request.form['cliente_id'])#nao vai ser usado
     POST_ID_USER = int(request.form['user_id'])#usamos este porque é o id de sessão
     POST_DIA_HORA = str(request.form['dia_hora'])
     proxy = xmlrpclib.ServerProxy("http://localhost:8000/")
