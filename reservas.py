@@ -21,7 +21,7 @@ def criar_reserva():
     POST_SALA_ID = int(request.form['sala_id'])
     POST_ID_USER = int(request.form['user_id'])#usamos este porque é o id de sessão
     POST_DIA_HORA = str(request.form['dia_hora'])
-    proxy = xmlrpclib.ServerProxy("http://localhost:8000/")
+    proxy = xmlrpclib.ServerProxy("http://localhost:"+str(PORTA_RPCSERVER)+"/")
     if proxy.criar_reserva(POST_SALA_ID,POST_ID_USER,POST_DIA_HORA):
         return "reserva feita"
     else:
@@ -30,7 +30,7 @@ def criar_reserva():
 @app.route('/reservas/update', methods=['POST'])
 def pagamento_reserva():
     POST_RESERVA_ID = str(request.form['id'])
-    proxy = xmlrpclib.ServerProxy("http://localhost:8000/")
+    proxy = xmlrpclib.ServerProxy("http://localhost:"+str(PORTA_RPCSERVER)+"/")
     if proxy.pagamento_reserva(POST_RESERVA_ID):
         return "pagamento de reserva feita"
     else:
@@ -55,9 +55,8 @@ def get_reserva_sala(sala_id):
 @app.route('/reservas/user/<int:user_id>', methods=['GET'])
 def get_reserva_user(user_id):
     engine = create_engine(NOME_BASE_DADOS, echo=True)
-    query = engine.execute("select * from reservas where reservas.user_id="+str(user_id)) 
-    #Query the result and get cursor.Dumping that data to a JSON is looked by extension
-    result = {'reservas do user'+str(user_id): [dict(zip(tuple (query.keys()) ,i)) for i in query.cursor]}
+    query = engine.execute("select * from reservas where reservas.user_id="+str(user_id))
+    result = {'data': [dict(zip(tuple (query.keys()) ,i)) for i in query.cursor]}
     return json.dumps(result)
 
 @app.errorhandler(404)
@@ -66,4 +65,4 @@ def not_found(error):
 
 if __name__ == "__main__":
     app.secret_key = os.urandom(12)
-    app.run(debug=True,host='0.0.0.0', port=4001)
+    app.run(debug=True,host='0.0.0.0', port=PORTA_RESERVAS)

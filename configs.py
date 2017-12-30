@@ -1,6 +1,11 @@
 # coding=utf-8
 NOME_BASE_DADOS = 'sqlite:///tutorial.db'
 ENDERECO = 'http://127.0.0.1'
+PORTA_ROTAS = 4003
+PORTA_RESERVAS = 4001
+PORTA_SALAS = 4002
+PORTA_RPCSERVER = 8000
+MENSAGEM_LOGIN_FIRST = "<p>Por favor faca login primeiro</p>"
 from flask import Flask,jsonify
 from flask import Flask, flash, redirect, render_template, request, session, abort
 from flask import Flask, make_response, flash, redirect, render_template, request, session, abort

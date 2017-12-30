@@ -29,6 +29,15 @@ def get_user_id(user):
     else:
         return 0
     
+def get_user_saldo(user):
+    query = s.query(User).filter(User.username.in_([user]))
+    result = query.first()
+    if result:
+        return result.saldo
+    else:
+        return 0
+    
+
     
 def get_reservas():
     b = s.query(Reserva.id, Reserva.dia_hora, Reserva.data_pagamento)
@@ -60,14 +69,26 @@ def criar_reserva(sala_id,cliente_id,dia_hora):
         return False
 
 def pagamento_reserva(id_reserva):
-    data_agora = datetime.now()
-    data_agora_str = data_agora.strftime('%d/%m/%Y')
-    #s.query().filter(Reserva.id == id_reserva).update({"pagamento_feito": 1})
-    #s.query(Reserva).filter_by(id=id_reserva).update({"pagamento_feito": 1, "data_pagamento": data_agora_str})
-    #updt = update(reservas).where(reservas.c.id==id_reserva).values(pagamento_feito=1)
+    #data_agora = datetime.now()
+    #data_agora_str = data_agora.strftime('%d/%m/%Y')
     conn = sqlite3.connect("tutorial.db")
     c = conn.cursor()
     c.execute("UPDATE reservas SET pagamento_feito = 1 WHERE id =%s" % id_reserva)
+    c.execute("UPDATE reservas SET data_pagamento = CURRENT_TIMESTAMP WHERE id =%s" % id_reserva)
+    failed=False
+    try:
+        conn.commit()
+    except Exception as e:
+        failed=True
+    if not failed:
+        return True
+    else:
+        return False
+    
+def update_saldo(valor,id_user):
+    conn = sqlite3.connect("tutorial.db")
+    c = conn.cursor()
+    c.execute("UPDATE users SET saldo = saldo + %s WHERE id =%s" % (valor,id_user))
     failed=False
     try:
         conn.commit()
@@ -92,12 +113,14 @@ def criar_sala(nome_sala,preco_sala,capacidade_sala):
         return False
     
 
-server = SimpleXMLRPCServer(("localhost", 8000), allow_none=true)
+server = SimpleXMLRPCServer(("localhost", PORTA_RPCSERVER), allow_none=true)
 server.register_function(autenticar, "autenticar")
 server.register_function(get_reservas, "get_reservas")
 server.register_function(get_reserva, "get_reserva")
 server.register_function(criar_reserva, "criar_reserva")
 server.register_function(pagamento_reserva, "pagamento_reserva")
 server.register_function(get_user_id, "get_user_id")
+server.register_function(get_user_saldo, "get_user_saldo")
 server.register_function(criar_sala, "criar_sala")
+server.register_function(update_saldo, "update_saldo")
 server.serve_forever()

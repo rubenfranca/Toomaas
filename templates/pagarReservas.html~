@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <title>Home - Classroom booking app</title>
+  <title>Pagar Reservas - Classroom booking app</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
@@ -19,10 +19,10 @@
       <a class="navbar-brand" href="#">Classroom booking app</a>
     </div>
     <ul class="nav navbar-nav">
-      <li class="active"><a href="/">Home</a></li>
+      <li><a href="/">Home</a></li>
       <li><a href="/criarReserva">Criar Reserva</a></li>
       <li><a href="/reservas">Ver as minhas reservas</a></li>
-      <li><a href="/pagarReserva">Pagar Reservas</a></li>
+      <li class="active"><a href="/pagarReserva">Pagar Reservas</a></li>
     </ul>
     <ul class="nav navbar-nav navbar-right">
 		<li><a>{{session['username']}}</a></li>    	
@@ -31,27 +31,18 @@
   </div>
 </nav>
   
-<div class="container">  
-  <form action="http://localhost:4003/adicionarSaldo" method="POST">
+<h3>O meu saldo: {{session['saldo']}}</h3>
+<form action="http://localhost:4003/pagarReserva" method="POST">
+			{{dados|safe}}	
 	<div class="login">
-		<div class="login-screen">
-			<div class="app-title">
-				 <h3>O meu Saldo: {{saldo|safe}}</h3>
-			</div>
- 
-			<div class="login-form">
-				<div class="control-group">
-				<input type="number"  class="login-field" value="" placeholder="Adicionar ao Saldo" name="quantidade">
-				<label class="login-field-icon fui-lock" for="login-pass"></label>
-				</div>
- 
-                <input type="submit" value="Carregar dinheiro " class="btn btn-primary btn-large btn-block" >
+		<!--<div class="login-screen">
+			<div class="login-form">-->
+                <input type="submit" value="Pagar Reservas" class="btn btn-primary btn-large btn-block" >
 			    <br>
-			</div>
-		</div>
+			<!--</div>
+		</div>-->
 	</div>
 </form>
-</div>
 
 {% endif %}
 </body>

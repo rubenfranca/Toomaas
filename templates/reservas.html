@@ -11,8 +11,27 @@
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </head>
 <body>
-<p>dados de json</p>
 
-<p>{{dados|safe}}</p>
+<nav class="navbar navbar-default">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="#">Classroom booking app</a>
+    </div>
+    <ul class="nav navbar-nav">
+      <li><a href="/">Home</a></li>
+      <li><a href="/criarReserva">Criar Reserva</a></li>
+      <li class="active"><a href="/reservas">Ver as minhas reservas</a></li>
+      <li><a href="/pagarReserva">Pagar Reservas</a></li>
+    </ul>
+    <ul class="nav navbar-nav navbar-right">
+		<li><a>{{session['username']}}</a></li>    	
+    	<li><a href='/logout'>Logout</a></li>
+    </ul>
+  </div>
+</nav>
+<div class="container">
+	<p>{{dados|safe}}</p>
+</div>
+
 </body>
 </html>

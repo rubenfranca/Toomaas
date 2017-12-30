@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <title>Booking app</title>
+  <title>Login - Classroom booking app</title>
   <meta charset="utf-8">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
   <link rel="stylesheet" href="/static/style.css" type="text/css"> 
@@ -14,7 +14,7 @@
 {% if session['logged_in'] %}
 	<p>You're logged in already!{{ session['user_id'] }}</p>
 {% else %}
-
+{{mensagem|safe}}
  
  
 
